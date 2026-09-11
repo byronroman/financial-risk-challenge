@@ -19,3 +19,14 @@ export interface RegularUser extends BaseAuthUser {
 }
 
 export type AuthUser = AdminUser | RegularUser;
+
+export type JwtPayload =
+  | {
+      sub: string;
+      role: UserRole.ADMIN;
+    }
+  | {
+      sub: string;
+      role: UserRole.USER;
+      rut: string;
+    };

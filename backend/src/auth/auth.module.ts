@@ -5,6 +5,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RutAccessGuard } from './guards/rut-access.guard';
 
 @Module({
   imports: [
@@ -21,11 +23,13 @@ import { AuthController } from './auth.controller';
   controllers: [AuthController],
   providers: [
     AuthService,
+    JwtAuthGuard,
+    RutAccessGuard,
     {
       provide: USER_REPOSITORY,
       useClass: MockUserRepository,
     },
   ],
-  exports: [USER_REPOSITORY, JwtModule],
+  exports: [USER_REPOSITORY, JwtModule, JwtAuthGuard, RutAccessGuard],
 })
 export class AuthModule {}
